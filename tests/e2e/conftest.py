@@ -48,6 +48,39 @@ def fastapi_server():
     
     yield
 
+    # Terminate the FastAPI app
+    print("Shutting down FastAPI server...")
+    fastapi_process.terminate()
+    fastapi_process.wait()
+    print("FastAPI server has been terminated.")
+
+
+@pytest.fixture(scope="session")
+def playwright_instance_fixture():
+    """
+    Fixture to manage the Playwright lifecycle.
+    """
+    with sync_playwright() as playwright:
+        yield playwright
+
+
+@pytest.fixture(scope="session")
+def browser_context(playwright_instance_fixture):
+    """
+    Fixture to launch a browser instance.
+    """
+    browser = playwright_instance_fixture.chromium.launch(headless=True)
+    yield browser
+    browser.close()
+
+@pytest.fixture(scope="function")
+def page(browser_context):
+    """
+    Fixture to create a new page in the browser context for each test.
+    """
+    page = browser_context.new_page()
+    yield page
+    page.close()
     
 
                                
