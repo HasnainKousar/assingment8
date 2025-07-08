@@ -215,4 +215,30 @@ def test_divide(a: Number, b: Number, expected: Number) -> None:
     assert result == expected, f"Expected divide({a}, {b}) to be {expected}, but got {result}"
 
 
+# ----------------------------------------
+# Unit tests for divide function with zero division error
+# ----------------------------------------
 
+def test_divide_by_zero() -> None:
+    """
+    Test the divide function for zero division error.
+
+    This test checks that dividing by zero raises a ValueError as expected.
+    
+    Steps:
+    1. Attempt to call the divide function with a non-zero numerator and zero denominator.
+    2. Use pytest.raises to assert that a ValueError is raised.
+    3. Assert that the error message is as expected.
+
+    Example:
+    >>> test_divide_by_zero()
+    """
+    
+    # Attempt to call the divide function with a non-zero numerator and zero denominator
+    with pytest.raises(ValueError) as exc_info:
+        # Attempt to divide by zero
+        divide(5, 0)
+
+    # Assert that a ValueError is raised
+    assert "Cannot divide by zero." in str(exc_info.value), \
+        f"Expected error message 'Cannot divide by zero.', but got '{exc_info.value}'"
