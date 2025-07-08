@@ -131,4 +131,31 @@ def test_divide_api(client):
     assert response.json() == {"result": 5}, f"Expected JSON response {{'result': 5}}, got {response.json()}"
 
 
+#-----------------------
+# Test divide_by_zero_api
+#-----------------------
 
+def test_divide_by_zero_api(client):
+    """
+    Test the Division by Zero API endpoint.
+    
+    This test verifies that the /divide endpoint raises a ValueError when attempting to divide by zero.
+
+    Steps:
+    1. Send a POST request to the /divide endpoint with a JSON data containing a number and zero.
+    2. Assert that the response status code is 400 (Bad Request).
+    3. Assert that the response JSON contains an error message indicating division by zero is not allowed.
+    """
+    # Send a POST request to the /divide endpoint with a number and zero
+    response = client.post("/divide", json={"a": 10, "b": 0})
+
+    # Assert that the response status code is 400 (Bad Request)
+    assert response.status_code == 400, f"Expected status code 400, got {response.status_code}"
+
+    # Assert that the JSON response contains an 'error' field
+    assert 'error' in response.json(), "Response JSON does not contain 'error' field"
+    
+    # Assert that the 'error' field contains the correct error message
+    assert "Cannot divide by zero." in response.json()['error'], \
+        f"Expected error message 'Cannot divide by zero.', got '{response.json()['error']}'"
+    
