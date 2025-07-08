@@ -28,3 +28,29 @@ def client():
         yield client # This will provide the client to the tests
 
 
+#-----------------------
+# Test add_api
+#-----------------------
+
+def test_add_api(client):
+    """
+    Test the Addition API endpoint.
+    
+    This test verifies the /add endpoint correctly addes two numbers
+    provided in the JSON payload and returns the expected result.
+
+    Steps:
+    1. Send a POST request to the /add endpoint with a JSON data containing two numbers.
+    2. Assert that the response status code is 200 (OK).
+    3. Assert that the response JSON contains the expected result.
+    """
+    # Send a POST request to the /add endpoint with two numbers
+    response = client.post("/add", json={"a": 3, "b": 5})
+
+    # Assert that the response status code is 200 (OK)
+    assert response.status_code == 200, f"Expected status code 200, got {response.status_code}"
+
+    # Assert that the response JSON contains the expected result
+    assert response.json() == {"result": 8}, f"Expected JSON response {{'result': 8}}, got {response.json()}"
+
+
