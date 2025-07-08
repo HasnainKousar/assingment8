@@ -43,3 +43,28 @@ def test_calculator_addition(page, fastapi_server):
     
     # Assert that the result is displayed correctly in the result element
     assert page.inner_text('#result') == 'Calculation Result: 8'
+
+@pytest.mark.e2e
+def test_calculator_divide_by_zero(page, fastapi_server):
+    """
+    This will test the division by zero scenario in the FastAPI calculator application.
+
+    The test verifies that when a POST request is made to the /divide endpoint with a number and zero,
+    the response contains an error message indicating division by zero is not allowed.
+    """
+    
+    # Navigate to the homepage of the FastAPI application
+    page.goto('http://localhost:8000')
+    
+    # Fill in the input fields for the first number
+    page.fill('#a', '10')
+
+    # Fill in the input field for the second number with zero
+    page.fill('#b', '0')
+    
+    # Click the "Divide" button to perform the division operation
+    page.click('button:text("Divide")')
+    
+    # Assert that the result element contains an error message for division by zero
+    assert page.inner_text('#result') == 'Error: Cannot divide by zero.'
+
