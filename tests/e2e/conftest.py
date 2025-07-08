@@ -4,10 +4,9 @@ THis file contains the configuration for end-to-end tests using Playwright.
 It sets up the Playwright test environment, including the browser context and page fixtures.
 """
 
-from http import server
+
 import subprocess
 import time
-from turtle import st
 import pytest
 from playwright.sync_api import sync_playwright
 import requests
@@ -22,7 +21,7 @@ def fastapi_server():
     fastapi_process = subprocess.Popen(['python', 'main.py'])
 
     # Define the URL to check if the server is up
-    server_url = 'http://127,0,0,1:8000/'
+    server_url = 'http://127.0.0.1:8000/'
 
     # Wait for the server to start
     timeout = 30 
@@ -81,6 +80,6 @@ def page(browser_context):
     page = browser_context.new_page()
     yield page
     page.close()
-    
+
 
                                
