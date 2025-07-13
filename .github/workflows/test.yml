@@ -68,6 +68,7 @@ jobs:
      
      - uses: docker/login-action@v3
        with:
+         registry: docker.io
          username: ${{ secrets.DOCKERHUB_USERNAME }}
          password: ${{ secrets.DOCKERHUB_TOKEN }}
          
@@ -75,8 +76,9 @@ jobs:
        with:
          push: true
          tags: |
-           HasnainKousar/assignment8:latest
-           HasnainKousar/assignment8:${{ github.sha }}
+           docker.io/hkousar13/assignment8:latest
+           docker.io/hkousar13/assignment8:${{ github.sha }}
          platforms: linux/amd64,linux/arm64
-         cache-from: type=registry,ref=HasnainKousar/assignment8:cache
-         cache-to: type=inline,mode=max
+         context: .
+         file: ./Dockerfile
+         no-cache: true
