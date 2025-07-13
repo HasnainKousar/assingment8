@@ -1,1 +1,11 @@
+# Existing CVE
 CVE-2024-6345
+
+# h11 package vulnerability - malformed Chunked-Encoding bodies
+CVE-2025-43859
+
+# Common Python package vulnerabilities that might need ignoring
+# Uncomment the ones you need to ignore after confirming from GitHub Actions output
+# CVE-2024-6232  # Common setuptools vulnerability
+# CVE-2024-5569  # Common pip vulnerability
+# GHSA-34jh-p97f-mpxf  # GitHub Security Advisory format
